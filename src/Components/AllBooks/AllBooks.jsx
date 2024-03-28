@@ -55,7 +55,7 @@ const AllBooks = ({ book }) => {
 };
 
 AllBooks.propTypes = {
-    book: PropTypes.object.isRequired, // Ensure that 'book' prop is required
+    book: PropTypes.object.isRequired,
 };
 
 export default AllBooks;

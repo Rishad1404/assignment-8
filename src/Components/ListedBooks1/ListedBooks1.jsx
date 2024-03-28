@@ -2,10 +2,46 @@ import { useState } from "react";
 // import AllBooks from "../AllBooks/AllBooks";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { Link, Outlet } from "react-router-dom";
+import { getStoredReadBooks, getStoredWishlistBooks } from "../../utility/localstorage";
 const ListedBooks1 = () => {
 
+    const readList=getStoredReadBooks();
+    const wishList=getStoredWishlistBooks()
     const [tabIndex,setTabIndex]=useState(0)
+    const [readListState,setReadListState]=useState([])
+    const [wishListState,setWishListState]=useState([])
 
+    const handleChange = (e) => {
+        const v = e.target.value;
+        if (readList !== null) {
+          if (v === "Rating") {
+            readList.sort((a, b) => (a.rating > b.rating ? -1 : 1));
+          } else if (v === "Number of Page") {
+            readList.sort((a, b) => (a.totalPages > b.totalPages ? -1 : 1));
+          } else if (v === "Year of Publishing") {
+            readList.sort((a, b) =>
+              a.yearOfPublishing > b.yearOfPublishing ? -1 : 1,
+            );
+          }
+          setReadListState([...readList]);
+        } else {
+          setReadListState([]);
+        }
+        if (wishList !== null) {
+          if (v === "Rating") {
+            wishList.sort((a, b) => (a.rating > b.rating ? -1 : 1));
+          } else if (v === "Number of Page") {
+            wishList.sort((a, b) => (a.totalPages > b.totalPages ? -1 : 1));
+          } else if (v === "Year of Publishing") {
+            wishList.sort((a, b) =>
+              a.yearOfPublishing > b.yearOfPublishing ? -1 : 1,
+            );
+          }
+          setWishListState([...wishList]);
+        } else {
+          setWishListState([]);
+        }
+      };
     
 
     return (
@@ -17,9 +53,9 @@ const ListedBooks1 = () => {
                 <div tabIndex={0} role="button" className="bg-green-500 px-5 m-1 flex items-center text-xl gap-3 py-2 rounded-lg font-semibold text-white">Sort By <MdKeyboardArrowDown /></div>
                 <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
                     <li><a></a></li>
-                    <li><a>Rating</a></li>
-                    <li><a>Number of pages</a></li>
-                    <li><a>Publisher Year</a></li>
+                    <li ><a onClick={handleChange}>Rating</a></li>
+                    <li><a onClick={handleChange}>Number of pages</a></li>
+                    <li><a onClick={handleChange}>Publisher Year</a></li>
                 </ul>
             </div>
             <div className="flex -mx-4 items-center overflow-x-auto overflow-y-hidden sm:justify-start flex-nowrap dark:text-gray-800 my-10">

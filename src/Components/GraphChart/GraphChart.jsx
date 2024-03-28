@@ -8,10 +8,11 @@ const colors = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', 'red', 'pink'];
 const GraphChart = () => {
     const [graphData, setGraphData] = useState([]);
 
+
     useEffect(() => {
         const books = getStoredReadBooks();
         const transformedData = books.map((book) => ({
-            bookName: book.bookName,  
+            bookName: book.bookName,
             totalPages: book.totalPages  
         }));
         setGraphData(transformedData);
